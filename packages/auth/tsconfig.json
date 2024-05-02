@@ -1,0 +1,5 @@
+{
+  "extends": "@blindi/tsconfig/library.json",
+  "include": ["src/**/*"],
+  
+} 

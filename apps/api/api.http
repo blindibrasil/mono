@@ -1,0 +1,89 @@
+@baseUrl = http://localhost:3333
+@authenticateWithPasswordToken = {{authenticateWithPassword.response.body.token}}
+@authenticateWithGithubToken = {{authenticateWithPassword.response.body.token}}
+@slugOrganization = rocketseat
+
+@name init
+GET {{baseUrl}}
+Content-Type: application/json
+
+### USERS ###
+
+# @name createAccount
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+	"name": "Kauê Tiago Assis",
+	"email": "kaue@acme.com",
+	"password": "123456"
+}
+
+###
+
+# @name authenticateWithPassword
+POST {{baseUrl}}/sessions/password
+Content-Type: application/json
+
+{
+	"email": "kaue@acme.com",
+	"password": "654321"
+}
+
+###
+
+# @name authenticateWithGithub
+POST {{baseUrl}}/sessions/github
+Content-Type: application/json
+
+{
+	"code": "b4c0d12e3cdff515892a"
+}
+
+###
+
+# @name getProfile
+GET {{baseUrl}}/profile
+Content-Type: application/json
+Authorization: Bearer {{authenticateWithPasswordToken}}
+
+###
+
+# @name requestPasswordRecover
+POST {{baseUrl}}/password/recover
+Content-Type: application/json
+
+{
+	"email": "kaue@acme.com"
+}
+
+###
+
+# @name resetPassword
+POST {{baseUrl}}/password/reset
+Content-Type: application/json
+
+{
+	"code": "4cb59d0c-5b80-4908-8eb9-ac4438baa312",
+	"password": "654321"
+}
+
+###
+
+# @name createOrganization
+POST {{baseUrl}}/organization
+Content-Type: application/json
+Authorization: Bearer {{authenticateWithPasswordToken}}
+
+{
+  "name": "string",
+  "domain": "string",
+  "shouldAttachUsersByDomain": true
+}
+
+###
+
+# @name getMembership
+GET  {{baseUrl}}/organization/{{slugOrganization}}/membership
+Content-Type: application/json
+Authorization: Bearer {{authenticateWithPasswordToken}}
